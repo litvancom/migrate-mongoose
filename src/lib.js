@@ -14,6 +14,8 @@ Promise.config({
   warnings: false
 });
 
+mongoose.Promise = Promise;
+
 const es6Template =
 `
 /**
