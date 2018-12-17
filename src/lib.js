@@ -11,8 +11,10 @@ import MigrationModelFactory from './db';
 let MigrationModel;
 
 Promise.config({
-  warnings: false
+  warnings: true
 });
+
+mongoose.Promise = Promise;
 
 const es6Template = `
 /**
@@ -216,6 +218,7 @@ export default class Migrator {
         migrationsRan.push(migration.toJSON());
         numMigrationsRan++;
       } catch (err) {
+        console.error(err);
         this.log(`Failed to run migration ${migration.name} due to an error.`.red);
         this.log(`Not continuing. Make sure your data is in consistent state`.red);
         throw err instanceof Error ? err : new Error(err);
