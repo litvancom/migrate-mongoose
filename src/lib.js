@@ -201,7 +201,7 @@ export default class Migrator {
         const callPromise =  migrationFunctions[direction].call(
           this.connection.model.bind(this.connection),
           err => {
-            if (err) throw err
+            if (err) throw err;
             resolve();
           }
         );
