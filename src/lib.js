@@ -182,19 +182,19 @@ export default class Migrator {
       }
 
       try {
-        // await new Promise( (resolve, reject) => {
-        //   const callPromise =  migrationFunctions[direction].call(
-        //     this.connection.model.bind(this.connection),
-        //     function callback(err) {
-        //       if (err) return reject(err);
-        //       resolve();
-        //     }
-        //   );
-        //
-        //   if (callPromise && typeof callPromise.then === 'function') {
-        //     callPromise.then(resolve).catch(reject);
-        //   }
-        // });
+        await new Promise( (resolve, reject) => {
+          const callPromise =  migrationFunctions[direction].call(
+            this.connection.model.bind(this.connection),
+            function callback(err) {
+              if (err) return reject(err);
+              resolve();
+            }
+          );
+
+          if (callPromise && typeof callPromise.then === 'function') {
+            callPromise.then(resolve).catch(reject);
+          }
+        });
 
         // const callPromise =  migrationFunctions[direction].call(
         //   this.connection.model.bind(this.connection),
@@ -208,9 +208,9 @@ export default class Migrator {
         //   await callPromise
         // }
 
-        const callPromise = migrationFunctions[direction];
-        callPromise.bind(this.connection.model.bind(this.connection));
-        await callPromise();
+        // const callPromise = migrationFunctions[direction];
+        // callPromise.bind(this.connection.model.bind(this.connection));
+        // await callPromise();
 
         this.log(`${direction.toUpperCase()}:   `[direction == 'up' ? 'green' : 'red'] + ` ${migration.filename} `);
 
